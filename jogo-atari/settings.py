@@ -1,0 +1,34 @@
+# Dimensões da tela
+WIDTH = 800
+HEIGHT = 600
+
+# Taxa de quadros
+FPS = 60
+
+# Cores (RGB)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
+
+# Configurações do Player (Nave)
+PLAYER_SPEED = 7
+PLAYER_WIDTH = 50
+PLAYER_HEIGHT = 40
+PLAYER_COLOR = GREEN
+
+# Configurações do Tiro (Projétil)
+PROJECTILE_SPEED = -10
+PROJECTILE_WIDTH = 5
+PROJECTILE_HEIGHT = 15
+PROJECTILE_COLOR = YELLOW
+
+# Configurações do Asteroide
+INITIAL_MIN_SPEED = 2
+INITIAL_MAX_SPEED = 4
+ASTEROID_WIDTH = 40
+ASTEROID_HEIGHT = 40
+ASTEROID_COLOR = RED
+INITIAL_SPAWN_RATE = 90 # Em frames (a 60 FPS, começa em 1.5 segundos)
