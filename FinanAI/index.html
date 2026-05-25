@@ -9,22 +9,585 @@
     <!-- SEO Meta Tags -->
     <meta name="description" content="Controle suas finanças pessoais com o poder de inteligência artificial local e gráficos de alto nível em um painel brutalista dark premium." />
     
-    <!-- Google Fonts: Outfit (Interface) e JetBrains Mono (Métricas/Valores) -->
+    <!-- Google Fonts: Outfit e JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <style>
-      body {
-        background-color: #0A0A0C;
-        color: #FFFFFF;
-        margin: 0;
-        overflow-x: hidden;
-      }
-    </style>
+    <!-- Estilos customizados -->
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body class="bg-brutal-bg font-sans text-brutal-text antialiased">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body class="bg-brutal-bg text-brutal-text antialiased">
+    
+    <!-- Estrutura Principal -->
+    <div class="app-container">
+      
+      <!-- Mobile Top Header -->
+      <header class="mobile-header">
+        <div className="logo-area">
+          <div class="logo-indicator"></div>
+          <span class="logo-text">FINAN<span class="logo-accent">AI</span></span>
+        </div>
+        <button id="mobile-menu-toggle" class="btn-icon">
+          <i data-lucide="menu"></i>
+        </button>
+      </header>
+
+      <!-- Mobile Dropdown Navigation -->
+      <div id="mobile-nav-dropdown" class="mobile-nav hidden">
+        <nav class="nav-links">
+          <button data-target="dashboard" class="nav-item active"><i data-lucide="layout-dashboard"></i>Dashboard</button>
+          <button data-target="transactions" class="nav-item"><i data-lucide="arrow-right-left"></i>Transações</button>
+          <button data-target="goals" class="nav-item"><i data-lucide="target"></i>Metas</button>
+          <button data-target="chat" class="nav-item spark-link"><i data-lucide="sparkles"></i>Assistente IA</button>
+          <button data-target="reports" class="nav-item"><i data-lucide="bar-chart-3"></i>Análises & Simulações</button>
+        </nav>
+        <div class="mobile-profile-card">
+          <div class="profile-meta">
+            <div class="profile-avatar"><i data-lucide="user"></i></div>
+            <div>
+              <p class="meta-label">Perfil</p>
+              <h4 id="mobile-user-name" class="font-mono">Usuário Pro</h4>
+            </div>
+          </div>
+          <button id="btn-mobile-profile" class="btn-xs border-only">Configurar</button>
+        </div>
+      </div>
+
+      <!-- Desktop Sidebar -->
+      <aside class="desktop-sidebar">
+        <div>
+          <div class="logo-area mb-10 pl-2">
+            <div class="logo-indicator"></div>
+            <span class="logo-text">FINAN<span class="logo-accent">AI</span></span>
+          </div>
+
+          <nav class="nav-links">
+            <button data-target="dashboard" class="nav-item active"><i data-lucide="layout-dashboard"></i>Dashboard</button>
+            <button data-target="transactions" class="nav-item"><i data-lucide="arrow-right-left"></i>Transações</button>
+            <button data-target="goals" class="nav-item"><i data-lucide="target"></i>Metas</button>
+            <button data-target="chat" class="nav-item spark-link"><i data-lucide="sparkles"></i>Assistente IA</button>
+            <button data-target="reports" class="nav-item"><i data-lucide="bar-chart-3"></i>Análises & Simulações</button>
+          </nav>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-meta mb-3">
+            <div class="profile-avatar"><i data-lucide="user"></i></div>
+            <div class="overflow-hidden">
+              <p class="meta-label">Usuário</p>
+              <h4 id="user-name" class="font-mono truncate">Usuário Pro</h4>
+            </div>
+          </div>
+          <div class="border-top pt-3">
+            <div class="flex justify-between items-center text-xs font-mono">
+              <span class="text-muted">Teto Mensal:</span>
+              <span id="user-budget-display" class="text-green font-bold">R$ 4.500</span>
+            </div>
+          </div>
+          <button id="btn-desktop-profile" class="w-full mt-3 border-only py-1.5 uppercase font-mono text-[10px] tracking-wider">Ajustar Perfil</button>
+        </div>
+      </aside>
+
+      <!-- Main Panel Content -->
+      <main class="main-content">
+        <div class="max-w-6xl mx-auto">
+          
+          <!-- ================= TAB: DASHBOARD ================= -->
+          <section id="panel-dashboard" class="panel block animate-fade">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-bottom pb-5 mb-6">
+              <div>
+                <h1 class="text-2xl md:text-3xl font-bold font-mono tracking-tight uppercase">CONTROLE DE <span class="text-green">FINANÇAS</span></h1>
+                <p class="text-xs text-muted font-mono mt-1">Status do terminal: <span class="text-green font-bold animate-pulse">● ONLINE</span></p>
+              </div>
+              <div class="flex gap-3">
+                <button id="btn-dash-new-t" class="btn-primary"><i data-lucide="plus"></i> Nova Transação</button>
+                <button id="btn-dash-ask-ai" class="btn-secondary"><i data-lucide="sparkles" class="text-green"></i> Perguntar ao FinanAI</button>
+              </div>
+            </div>
+
+            <!-- Overview Metrics Grid -->
+            <div class="grid grid-4 gap-4 mb-6">
+              <div class="brutal-card border-l-green">
+                <div class="card-meta mb-2">
+                  <span class="meta-title uppercase">Saldo Geral</span>
+                  <i data-lucide="wallet"></i>
+                </div>
+                <h2 id="metric-balance" class="text-xl md:text-2xl font-bold font-mono tracking-tight">R$ 0,00</h2>
+                <p class="text-[10px] text-muted font-mono mt-2 uppercase">Fundo em caixa líquido</p>
+              </div>
+
+              <div class="brutal-card border-l-greenNeon">
+                <div class="card-meta mb-2">
+                  <span class="meta-title uppercase">Receitas</span>
+                  <i data-lucide="trending-up" class="text-green"></i>
+                </div>
+                <h2 id="metric-income" class="text-xl md:text-2xl font-bold font-mono tracking-tight text-green">R$ 0,00</h2>
+                <p class="text-[10px] text-muted font-mono mt-2 uppercase">Total arrecadado no mês</p>
+              </div>
+
+              <div class="brutal-card border-l-red">
+                <div class="card-meta mb-2">
+                  <span class="meta-title uppercase">Despesas</span>
+                  <i data-lucide="trending-down" class="text-red"></i>
+                </div>
+                <h2 id="metric-expense" class="text-xl md:text-2xl font-bold font-mono tracking-tight text-red">R$ 0,00</h2>
+                <p id="metric-expense-sub" class="text-[10px] text-muted font-mono mt-2 uppercase">0% do orçamento gasto</p>
+              </div>
+
+              <div class="brutal-card border-l-neutral">
+                <div class="card-meta mb-2">
+                  <span class="meta-title uppercase">Grau Financeiro</span>
+                  <i data-lucide="piggy-bank"></i>
+                </div>
+                <div class="flex items-baseline gap-2">
+                  <h2 id="metric-savings-rate" class="text-xl md:text-2xl font-bold font-mono tracking-tight">0%</h2>
+                  <span id="metric-health-score" class="text-base font-bold font-mono">(C)</span>
+                </div>
+                <p class="text-[10px] text-muted font-mono mt-2 uppercase">Taxa de retenção salarial</p>
+              </div>
+            </div>
+
+            <!-- AI Highlight banner -->
+            <div class="ai-highlight-banner border-green mb-6">
+              <div class="flex items-center gap-2 mb-3">
+                <i data-lucide="sparkles" class="text-green animate-pulse"></i>
+                <h3 class="font-mono text-xs uppercase tracking-wider font-bold text-green">Insights do Assistente FinanAI</h3>
+              </div>
+              <div class="grid grid-2 gap-4" id="dashboard-ai-insights">
+                <!-- Inserido dinamicamente via JS -->
+              </div>
+            </div>
+
+            <!-- Charts and category layout -->
+            <div class="grid grid-3 gap-6 mb-6">
+              <div class="brutal-card col-span-2">
+                <h3 class="font-mono text-xs font-bold uppercase tracking-wider text-muted mb-6">Histórico Recente de Caixa</h3>
+                <div class="chart-wrapper">
+                  <canvas id="flowChart"></canvas>
+                </div>
+              </div>
+              <div class="brutal-card">
+                <h3 class="font-mono text-xs font-bold uppercase tracking-wider text-muted mb-6">Distribuição de Gastos</h3>
+                <div class="pie-wrapper">
+                  <canvas id="pieChart"></canvas>
+                </div>
+                <div class="legend-grid mt-4 pt-4 border-top" id="dashboard-pie-legend">
+                  <!-- Inserido dinamicamente via JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Extrato Resumo & Metas Resumo -->
+            <div class="grid grid-2 gap-6">
+              <div class="brutal-card">
+                <div class="flex justify-between items-center mb-6">
+                  <h3 class="font-mono text-xs font-bold uppercase tracking-wider text-muted">Histórico de Movimentações</h3>
+                  <button data-goto="transactions" class="link-xs uppercase text-green font-mono">Ver Tudo <i data-lucide="arrow-right" class="inline" style="width: 10px; height: 10px;"></i></button>
+                </div>
+                <div class="space-y-3" id="dashboard-recent-transactions">
+                  <!-- Inserido dinamicamente via JS -->
+                </div>
+              </div>
+
+              <div class="brutal-card">
+                <div class="flex justify-between items-center mb-6">
+                  <h3 class="font-mono text-xs font-bold uppercase tracking-wider text-muted">Metas de Economia Ativas</h3>
+                  <button data-goto="goals" class="link-xs uppercase text-green font-mono">Gerenciar Metas <i data-lucide="arrow-right" class="inline" style="width: 10px; height: 10px;"></i></button>
+                </div>
+                <div class="space-y-4" id="dashboard-active-goals">
+                  <!-- Inserido dinamicamente via JS -->
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ================= TAB: TRANSAÇÕES ================= -->
+          <section id="panel-transactions" class="panel hidden animate-fade">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-bottom pb-5 mb-6">
+              <div>
+                <h1 class="text-2xl md:text-3xl font-bold font-mono tracking-tight uppercase">EXTRATO DE <span class="text-green">TRANSAÇÕES</span></h1>
+                <p class="text-xs text-muted font-mono mt-1">Total registrado: <span id="txt-total-t" class="text-white font-semibold">0</span> | Filtrados: <span id="txt-filtered-t" class="text-green font-semibold">0</span></p>
+              </div>
+              <button id="btn-ledger-new-t" class="btn-primary"><i data-lucide="plus"></i> Nova Transação</button>
+            </div>
+
+            <!-- Filtros -->
+            <div class="grid grid-4 gap-4 p-4 bg-brutal-panel border border-brutal-border mb-6">
+              <div class="relative">
+                <input type="text" id="filter-search" placeholder="Pesquisar descrição..." class="brutal-input pl-9" />
+                <i data-lucide="search" class="absolute-left-icon"></i>
+              </div>
+
+              <div class="btn-tabs-container">
+                <button data-type="All" class="tab-btn active">Todos</button>
+                <button data-type="income" class="tab-btn">Entradas</button>
+                <button data-type="expense" class="tab-btn">Saídas</button>
+              </div>
+
+              <div>
+                <select id="filter-category" class="brutal-input select-arrow">
+                  <option value="Todas">Todas as Categorias</option>
+                  <option value="Alimentação">Alimentação</option>
+                  <option value="Moradia">Moradia</option>
+                  <option value="Transporte">Transporte</option>
+                  <option value="Lazer">Lazer</option>
+                  <option value="Saúde">Saúde</option>
+                  <option value="Salário">Salário</option>
+                  <option value="Freelance">Freelance</option>
+                  <option value="Outros">Outros</option>
+                </select>
+              </div>
+
+              <button id="btn-clear-filters" class="btn-secondary"><i data-lucide="filter"></i> Limpar Filtros</button>
+            </div>
+
+            <!-- Ledger Table -->
+            <div class="border border-brutal-border bg-brutal-panel overflow-hidden">
+              <div class="table-container">
+                <table class="brutal-table font-mono w-full">
+                  <thead>
+                    <tr class="bg-brutal-panel-light border-bottom text-muted">
+                      <th class="px-6 py-4">Data</th>
+                      <th class="px-6 py-4">Descrição</th>
+                      <th class="px-6 py-4">Categoria</th>
+                      <th class="px-6 py-4 text-right">Valor</th>
+                      <th class="px-6 py-4 text-center">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ledger-tbody" class="text-xs">
+                    <!-- Inserido dinamicamente via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ================= TAB: METAS ================= -->
+          <section id="panel-goals" class="panel hidden animate-fade">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-bottom pb-5 mb-6">
+              <div>
+                <h1 class="text-2xl md:text-3xl font-bold font-mono tracking-tight uppercase">METAS DE <span class="text-green">ECONOMIA</span></h1>
+                <p class="text-xs text-muted font-mono mt-1">Planeje seus objetivos de poupança com projeção analítica em tempo real.</p>
+              </div>
+              <button id="btn-goals-new-g" class="btn-primary"><i data-lucide="plus"></i> Nova Meta</button>
+            </div>
+
+            <!-- Caixa de aviso IA Geral -->
+            <div class="brutal-card border border-brutal-border p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+              <div class="flex items-center gap-3">
+                <i data-lucide="sparkles" class="text-green animate-pulse"></i>
+                <div class="font-mono text-xs">
+                  <p class="text-white uppercase font-bold">Projeção Geral do Terminal IA</p>
+                  <p class="text-muted mt-1">Sobra mensal de caixa ativa: <span id="goals-savings-display" class="text-green font-bold">R$ 0,00</span></p>
+                </div>
+              </div>
+              <div id="goals-status-badge" class="font-mono text-[10px] uppercase bg-brutal-panel-light border border-brutal-border px-3 py-1.5 text-muted">
+                ---
+              </div>
+            </div>
+
+            <!-- Grid de Metas -->
+            <div class="grid grid-2 gap-6" id="goals-grid-container">
+              <!-- Inserido dinamicamente via JS -->
+            </div>
+          </section>
+
+          <!-- ================= TAB: IA CHAT ================= -->
+          <section id="panel-chat" class="panel hidden animate-fade">
+            <div class="flex flex-col h-[calc(100vh-140px)] md:h-[calc(100vh-60px)]">
+              <div class="flex justify-between items-center border-bottom pb-4 mb-4 shrink-0">
+                <div>
+                  <h1 class="text-2xl font-bold font-mono tracking-tight uppercase flex items-center gap-2">ASSISTENTE <span class="text-green">FINANAI</span></h1>
+                  <p class="text-[10px] text-muted font-mono uppercase mt-1">Módulo Conversacional On-Device | Análise de dados estatísticos integrada</p>
+                </div>
+                <button id="btn-clear-chat" class="border-only p-2" title="Limpar Conversa">
+                  <i data-lucide="trash-2"></i>
+                </button>
+              </div>
+
+              <!-- Chat feed -->
+              <div class="flex-1 overflow-y-auto pr-2 space-y-4" id="chat-messages-feed">
+                <!-- Inserido dinamicamente via JS -->
+              </div>
+
+              <!-- Quick Questions and prompt input -->
+              <div class="pt-4 border-top bg-brutal-bg shrink-0 space-y-4">
+                <div class="flex flex-wrap gap-2" id="chat-quick-questions">
+                  <button data-text="Minha saúde financeira está boa?" class="btn-tag text-[10px] font-mono border-only bg-brutal-panel-light">📊 Minha saúde financeira</button>
+                  <button data-text="Como posso economizar?" class="btn-tag text-[10px] font-mono border-only bg-brutal-panel-light">💡 Dicas para economizar</button>
+                  <button data-text="Simular compra de R$ 2500" class="btn-tag text-[10px] font-mono border-only bg-brutal-panel-light">🛍️ Simular Compra (R$ 2.500)</button>
+                  <button data-text="Analisar maior categoria de gastos" class="btn-tag text-[10px] font-mono border-only bg-brutal-panel-light">💸 Maior ralo de dinheiro</button>
+                </div>
+
+                <form id="chat-form" class="flex gap-2">
+                  <input type="text" id="chat-input" placeholder="Pergunte sobre seus gastos, limite mensal, ou simule uma compra..." class="brutal-input flex-1 py-3" />
+                  <button type="submit" id="chat-btn-submit" class="btn-primary px-5"><i data-lucide="send"></i></button>
+                </form>
+              </div>
+            </div>
+          </section>
+
+          <!-- ================= TAB: RELATÓRIOS & SIMULAÇÃO ================= -->
+          <section id="panel-reports" class="panel hidden animate-fade">
+            <div class="border-bottom pb-5 mb-6">
+              <h1 class="text-2xl md:text-3xl font-bold font-mono tracking-tight uppercase">ANÁLISES & <span class="text-green">SIMULAÇÕES</span></h1>
+              <p class="text-xs text-muted font-mono mt-1">Simulador avançado de decisão de compra e análises aprofundadas de caixa.</p>
+            </div>
+
+            <div class="grid grid-2 gap-6">
+              <!-- Simulador -->
+              <div class="brutal-card">
+                <div class="flex items-center gap-2 mb-6">
+                  <i data-lucide="sparkles" class="text-green animate-pulse"></i>
+                  <h3 class="font-mono text-xs font-bold uppercase tracking-wider text-white">Simulador de Compras FinanAI</h3>
+                </div>
+
+                <form id="simulator-form" class="space-y-4">
+                  <p class="text-xs font-mono text-muted leading-relaxed">
+                    Descubra matematicamente se aquela compra dos sonhos é segura ou se arruinará seu planejamento financeiro.
+                  </p>
+
+                  <div>
+                    <label class="block text-[10px] font-mono text-muted uppercase mb-1">Nome do Item</label>
+                    <input type="text" id="sim-item-name" placeholder="Ex: PlayStation 5, iPhone 16..." class="brutal-input" required />
+                  </div>
+
+                  <div class="grid grid-2 gap-4">
+                    <div>
+                      <label class="block text-[10px] font-mono text-muted uppercase mb-1">Valor Total (R$)</label>
+                      <input type="number" id="sim-item-value" placeholder="0,00" class="brutal-input" required />
+                    </div>
+
+                    <div>
+                      <label class="block text-[10px] font-mono text-muted uppercase mb-1">Forma de Pagamento</label>
+                      <div class="flex border border-brutal-border bg-brutal-panel-light p-0.5">
+                        <button type="button" id="btn-sim-cash" class="flex-1 text-[10px] uppercase font-mono py-1.5 text-center active-btn select-none">À Vista</button>
+                        <button type="button" id="btn-sim-parcels" class="flex-1 text-[10px] uppercase font-mono py-1.5 text-center text-muted select-none">Parcelar</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div id="sim-parcels-area" class="hidden">
+                    <label class="block text-[10px] font-mono text-muted uppercase mb-1">Número de Parcelas</label>
+                    <select id="sim-parcels-count" class="brutal-input">
+                      <option value="2">2x sem juros</option>
+                      <option value="3">3x sem juros</option>
+                      <option value="4">4x sem juros</option>
+                      <option value="5">5x sem juros</option>
+                      <option value="6">6x sem juros</option>
+                      <option value="8">8x sem juros</option>
+                      <option value="10">10x sem juros</option>
+                      <option value="12">12x sem juros</option>
+                      <option value="18">18x sem juros</option>
+                      <option value="24">24x sem juros</option>
+                    </select>
+                  </div>
+
+                  <button type="submit" class="w-full btn-primary py-2.5 mt-2">Iniciar Simulação de Compra</button>
+                </form>
+
+                <!-- Resultado Simulação -->
+                <div id="simulation-output" class="hidden mt-6 border p-4">
+                  <!-- Inserido dinamicamente via JS -->
+                </div>
+              </div>
+
+              <!-- Ranking de Gastos -->
+              <div class="brutal-card flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center gap-2 mb-6">
+                    <i data-lucide="bar-chart-3" class="text-green"></i>
+                    <h3 class="font-mono text-xs font-bold uppercase tracking-wider text-white">Ranqueamento de Gastos do Extrato</h3>
+                  </div>
+                  
+                  <p class="text-xs font-mono text-muted leading-relaxed mb-6">
+                    Visualização de barras para identificar instantaneamente as áreas que mais drenam suas economias mensais.
+                  </p>
+
+                  <div class="bar-chart-wrapper">
+                    <canvas id="rankingChart"></canvas>
+                  </div>
+                </div>
+
+                <div id="ranking-ai-insight" class="border-top pt-4 mt-4 font-mono text-[10px] text-muted flex gap-2">
+                  <!-- Inserido dinamicamente via JS -->
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+      </main>
+
+    </div>
+
+    <!-- ================= MODAL: AJUSTAR PERFIL ================= -->
+    <div id="modal-profile" class="modal-overlay hidden">
+      <div class="modal-card max-w-md">
+        <div class="modal-header">
+          <h3 class="font-mono text-base font-bold uppercase tracking-wider flex items-center gap-2">
+            <i data-lucide="dollar-sign" class="text-green"></i> Configurações de Perfil
+          </h3>
+          <button class="btn-close"><i data-lucide="x"></i></button>
+        </div>
+
+        <form id="form-profile" class="space-y-4">
+          <div>
+            <label class="block text-xs font-mono text-muted uppercase mb-1">Nome do Usuário</label>
+            <input type="text" id="prof-name" class="brutal-input" required />
+          </div>
+
+          <div>
+            <label class="block text-xs font-mono text-muted uppercase mb-1">Teto de Gastos Mensais (R$)</label>
+            <input type="number" id="prof-budget" class="brutal-input" min="0" required />
+            <p class="text-[10px] text-muted mt-1 font-mono">O FinanAI usará esse valor para calcular a saúde do seu orçamento mensal.</p>
+          </div>
+
+          <div class="flex gap-3 justify-end pt-2">
+            <button type="button" class="btn-secondary btn-close-modal">Cancelar</button>
+            <button type="submit" class="btn-primary">Salvar Alterações</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= MODAL: NOVA/EDITAR TRANSAÇÃO ================= -->
+    <div id="modal-transaction" class="modal-overlay hidden">
+      <div class="modal-card max-w-lg">
+        <div class="modal-header">
+          <h3 class="font-mono text-base font-bold uppercase tracking-wider flex items-center gap-2">
+            <i data-lucide="file-text" class="text-green"></i> <span id="tx-modal-title">Cadastrar Movimentação</span>
+          </h3>
+          <button class="btn-close"><i data-lucide="x"></i></button>
+        </div>
+
+        <form id="form-transaction" class="space-y-4">
+          <!-- ID Oculto se for edição -->
+          <input type="hidden" id="tx-id" />
+
+          <!-- Seletor de Tipo -->
+          <div class="grid grid-2 gap-2 border border-brutal-border p-0.5 bg-brutal-panel-light">
+            <button type="button" id="btn-tx-income" class="py-2 text-xs font-mono uppercase font-bold tracking-wider text-center select-none text-muted">Receita (Entrada)</button>
+            <button type="button" id="btn-tx-expense" class="py-2 text-xs font-mono uppercase font-bold tracking-wider text-center select-none active-btn-red text-white">Despesa (Saída)</button>
+          </div>
+
+          <div class="grid grid-3 gap-4">
+            <div class="col-span-2">
+              <label class="block text-[10px] font-mono text-muted uppercase mb-1">Descrição</label>
+              <input type="text" id="tx-description" placeholder="Ex: Salário CLT, Compras, Netflix..." class="brutal-input" required />
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-muted uppercase mb-1">Valor (R$)</label>
+              <input type="number" step="0.01" min="0.01" id="tx-amount" placeholder="0,00" class="brutal-input" required />
+            </div>
+          </div>
+
+          <div class="grid grid-2 gap-4">
+            <div>
+              <label class="block text-[10px] font-mono text-muted uppercase mb-1">Categoria</label>
+              <select id="tx-category" class="brutal-input select-arrow">
+                <option value="Alimentação">Alimentação</option>
+                <option value="Moradia">Moradia</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Lazer">Lazer</option>
+                <option value="Saúde">Saúde</option>
+                <option value="Salário">Salário</option>
+                <option value="Freelance">Freelance</option>
+                <option value="Outros">Outros</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-muted uppercase mb-1">Data</label>
+              <input type="date" id="tx-date" class="brutal-input" required />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[10px] font-mono text-muted uppercase mb-1">Notas / Detalhes (Opcional)</label>
+            <textarea id="tx-notes" placeholder="Informações adicionais..." rows="2" class="brutal-input resize-none"></textarea>
+          </div>
+
+          <div class="flex gap-3 justify-end pt-2 border-top mt-6">
+            <button type="button" class="btn-secondary btn-close-modal">Cancelar</button>
+            <button type="submit" class="btn-primary">Confirmar Lançamento</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= MODAL: NOVA META ================= -->
+    <div id="modal-goal" class="modal-overlay hidden">
+      <div class="modal-card max-w-md">
+        <div class="modal-header">
+          <h3 class="font-mono text-base font-bold uppercase tracking-wider flex items-center gap-2">
+            <i data-lucide="target" class="text-green"></i> Nova Meta de Economia
+          </h3>
+          <button class="btn-close"><i data-lucide="x"></i></button>
+        </div>
+
+        <form id="form-goal" class="space-y-4">
+          <div>
+            <label class="block text-xs font-mono text-muted uppercase mb-1">Título da Meta</label>
+            <input type="text" id="g-title" placeholder="Ex: Reserva de Emergência, Intercâmbio..." class="brutal-input" required />
+          </div>
+
+          <div class="grid grid-2 gap-4">
+            <div>
+              <label class="block text-xs font-mono text-muted uppercase mb-1">Alvo Total (R$)</label>
+              <input type="number" min="1" id="g-target" placeholder="0,00" class="brutal-input" required />
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-muted uppercase mb-1">Já Tenho (R$)</label>
+              <input type="number" min="0" id="g-current" placeholder="0,00" class="brutal-input" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-mono text-muted uppercase mb-1">Data Limite Desejada</label>
+            <input type="date" id="g-date" class="brutal-input" />
+          </div>
+
+          <div class="flex gap-3 justify-end pt-2 border-top mt-6">
+            <button type="button" class="btn-secondary btn-close-modal">Cancelar</button>
+            <button type="submit" class="btn-primary">Criar Meta</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ================= MODAL: APORTE META ================= -->
+    <div id="modal-aporte" class="modal-overlay hidden">
+      <div class="modal-card max-w-sm">
+        <div class="modal-header">
+          <h3 class="font-mono text-sm font-bold uppercase tracking-wider flex items-center gap-2">
+            <i data-lucide="coins" class="text-green"></i> Registrar Poupança
+          </h3>
+          <button class="btn-close"><i data-lucide="x"></i></button>
+        </div>
+
+        <form id="form-aporte" class="space-y-4">
+          <input type="hidden" id="aporte-goal-id" />
+          <p class="font-mono text-xs text-muted">
+            Adicionar fundos para a meta <span id="aporte-goal-title" class="text-white font-bold">---</span>.
+          </p>
+
+          <div>
+            <label class="block text-xs font-mono text-muted uppercase mb-1">Valor do Aporte (R$)</label>
+            <input type="number" min="0.01" step="0.01" id="aporte-amount" placeholder="0,00" class="brutal-input" required />
+          </div>
+
+          <div class="flex gap-3 justify-end pt-2">
+            <button type="button" class="btn-secondary btn-close-modal">Cancelar</button>
+            <button type="submit" class="btn-primary">Confirmar Aporte</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- CDNs de Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

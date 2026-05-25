@@ -1,0 +1,832 @@
+/* ==========================================================================
+   FinanAI - Brutalist Dark HUD Stylesheet
+   ========================================================================== */
+
+/* 1. Variáveis Globais */
+:root {
+  --bg: #0A0A0C;
+  --panel: #121216;
+  --panel-light: #1E1E24;
+  --border: #262626;
+  --text: #FFFFFF;
+  --text-muted: #A3A3A3;
+  --green: #22C55E;
+  --green-neon: #4ADE80;
+  --red: #EF4444;
+  --red-light: #F87171;
+  --font-sans: 'Outfit', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --shadow-green: 0 0 12px rgba(34, 197, 94, 0.15);
+  --shadow-red: 0 0 12px rgba(239, 68, 68, 0.15);
+}
+
+/* 2. Reset Básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+/* 3. Utilitários Gerais */
+.font-mono { font-family: var(--font-mono); }
+.font-sans { font-family: var(--font-sans); }
+.text-green { color: var(--green); }
+.text-red { color: var(--red); }
+.text-muted { color: var(--text-muted); }
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.uppercase { text-transform: uppercase; }
+.tracking-tight { tracking-spacing: -0.025em; }
+.tracking-wider { tracking-spacing: 0.05em; }
+.hidden { display: none !important; }
+.block { display: block !important; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-4 { gap: 1rem; }
+.gap-6 { gap: 1.5rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mb-10 { margin-bottom: 2.5rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.pt-2 { padding-top: 0.5rem; }
+.pt-3 { padding-top: 0.75rem; }
+.pt-4 { padding-top: 1rem; }
+.pb-4 { padding-bottom: 1rem; }
+.pb-5 { padding-bottom: 1.25rem; }
+.pl-2 { padding-left: 0.5rem; }
+.pl-9 { padding-left: 2.25rem; }
+.py-1.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+.py-2.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.px-2.5 { padding-left: 0.625rem; padding-right: 0.625rem; }
+.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+.px-4 { padding-left: 1rem; padding-right: 1rem; }
+.px-5 { padding-left: 1.25rem; padding-right: 1.25rem; }
+.px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+.py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+.w-full { width: 100%; }
+.flex-1 { flex: 1 1 0%; }
+.shrink-0 { flex-shrink: 0; }
+.overflow-hidden { overflow: hidden; }
+.border-bottom { border-bottom: 1px solid var(--border); }
+.border-top { border-top: 1px solid var(--border); }
+.cursor-pointer { cursor: pointer; }
+.select-none { user-select: none; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Grid Responsivo Brutalista */
+.grid {
+  display: grid;
+}
+.grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid-2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+@media (min-width: 1024px) {
+  .col-span-2 { grid-column: span 2 / span 2; }
+}
+
+/* 4. Layout Container Geral */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+  .app-container {
+    flex-direction: row;
+  }
+}
+
+/* 5. Mobile Top Header */
+.mobile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--panel);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+@media (min-width: 768px) {
+  .mobile-header {
+    display: none;
+  }
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-indicator {
+  height: 10px;
+  width: 10px;
+  background-color: var(--green);
+  box-shadow: 0 0 8px var(--green);
+}
+
+.logo-text {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 1.1rem;
+}
+
+.logo-accent {
+  color: var(--green);
+}
+
+/* 6. Navigation Mobile */
+.mobile-nav {
+  position: fixed;
+  top: 53px;
+  left: 0;
+  right: 0;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--border);
+  padding: 1.5rem;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobile-profile-card {
+  border: 1px solid var(--border);
+  background-color: var(--panel);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 7. Desktop Sidebar */
+.desktop-sidebar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktop-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 240px;
+    background-color: var(--panel);
+    border-right: 1px solid var(--border);
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    padding: 1.5rem;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  background-color: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.nav-item:hover, .nav-item.active {
+  background-color: var(--panel-light);
+  border-color: var(--green);
+  color: var(--green);
+  box-shadow: var(--shadow-green);
+  transform: translateX(2px);
+}
+
+.nav-item i {
+  width: 16px;
+  height: 16px;
+}
+
+.spark-link i {
+  color: var(--green);
+  animation: pulse 2s infinite;
+}
+
+/* Perfil Card */
+.profile-card {
+  border: 1px solid var(--border);
+  background-color: var(--panel-light);
+  padding: 1rem;
+  position: relative;
+}
+
+.profile-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.profile-avatar {
+  height: 36px;
+  width: 36px;
+  background-color: #1a1a20;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+}
+
+.meta-label {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.profile-meta h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* 8. Main Content */
+.main-content {
+  flex: 1 1 0%;
+  padding: 1rem;
+  overflow-y: auto;
+  max-height: 100vh;
+}
+
+@media (min-width: 768px) {
+  .main-content {
+    padding: 2rem;
+  }
+}
+
+.panel {
+  display: none;
+}
+
+/* 9. Cards Brutalistas */
+.brutal-card {
+  background-color: var(--panel);
+  border: 1px solid var(--border);
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.brutal-card:hover {
+  border-color: var(--green);
+  box-shadow: var(--shadow-green);
+  transform: translateY(-2px);
+}
+
+.border-l-green { border-left: 4px solid var(--green); }
+.border-l-greenNeon { border-left: 4px solid var(--green-neon); }
+.border-l-red { border-left: 4px solid var(--red); }
+.border-l-neutral { border-left: 4px solid #52525B; }
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  color: var(--text-muted);
+}
+
+.meta-title {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+
+.card-meta i {
+  width: 16px;
+  height: 16px;
+}
+
+/* 10. AI Highlights Banner */
+.ai-highlight-banner {
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  background-color: var(--panel-light);
+  padding: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-green);
+}
+
+.ai-insight-item {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  line-height: 1.6;
+}
+
+.ai-insight-bullet {
+  color: var(--green);
+  font-weight: 700;
+}
+
+.ai-insight-text {
+  color: #D4D4D8;
+}
+
+/* 11. Formulários & Inputs */
+.brutal-input {
+  width: 100%;
+  background-color: var(--panel-light);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  border-radius: 0;
+  transition: all 0.2s ease;
+}
+
+.brutal-input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: var(--shadow-green);
+}
+
+.brutal-input::placeholder {
+  color: #52525B;
+}
+
+.relative {
+  position: relative;
+}
+
+.absolute-left-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  width: 14px;
+  height: 14px;
+  color: var(--text-muted);
+}
+
+/* Botões */
+.btn-primary {
+  background-color: var(--green);
+  color: #000000;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--green-neon);
+  box-shadow: var(--shadow-green);
+}
+
+.btn-primary:active, .btn-secondary:active, .btn-danger:active {
+  transform: scale(0.95);
+}
+
+.btn-secondary {
+  background-color: var(--panel-light);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #27272F;
+  border-color: var(--text-muted);
+}
+
+.btn-danger {
+  background-color: var(--red);
+  color: #FFFFFF;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+  background-color: var(--red-light);
+  box-shadow: var(--shadow-red);
+}
+
+.border-only {
+  background-color: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 0.375rem 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.border-only:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.btn-tag {
+  cursor: pointer;
+  font-size: 10px;
+  border: 1px solid var(--border);
+  padding: 0.375rem 0.75rem;
+  background-color: var(--panel-light);
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+
+.btn-tag:hover {
+  border-color: var(--green);
+  color: var(--text);
+}
+
+/* 12. Tabs e Seletores */
+.btn-tabs-container {
+  display: flex;
+  border: 1px solid var(--border);
+  background-color: var(--panel-light);
+  padding: 0.125rem;
+  width: 100%;
+}
+
+.tab-btn {
+  flex: 1;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  padding: 0.375rem 0;
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+  background-color: var(--green);
+  color: #000;
+  font-weight: 700;
+}
+
+.select-arrow {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23A3A3A3' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 12px;
+  padding-right: 2rem;
+}
+
+/* 13. Tabela Brutalista */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.brutal-table {
+  border-collapse: collapse;
+}
+
+.brutal-table th {
+  padding: 1rem 1.5rem;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border);
+}
+
+.brutal-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.brutal-table tbody tr:hover {
+  background-color: rgba(30, 30, 36, 0.4);
+}
+
+.brutal-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.125rem 0.5rem;
+  border: 1px solid currentColor;
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: colors 0.2s ease;
+}
+
+.btn-icon:hover {
+  color: var(--text);
+}
+
+/* 14. Metas de Economia UI */
+.progress-bar-container {
+  width: 100%;
+  background-color: #27272A;
+  height: 8px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  background-color: var(--green);
+  height: 100%;
+  width: 0%;
+  transition: width 0.5s ease-out;
+}
+
+.goal-predict-box {
+  background-color: rgba(30, 30, 36, 0.4);
+  padding: 0.625rem;
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+/* 15. Chat do Assistente IA UI */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.msg-wrap {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 85%;
+  align-items: start;
+}
+
+.msg-wrap.ai {
+  margin-right: auto;
+}
+
+.msg-wrap.user {
+  margin-left: auto;
+  flex-direction: row-reverse;
+}
+
+.chat-avatar {
+  height: 32px;
+  width: 32px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-avatar.ai {
+  background-color: var(--panel);
+  border-color: var(--green);
+  color: var(--green);
+  box-shadow: var(--shadow-green);
+}
+
+.chat-avatar.user {
+  background-color: var(--panel-light);
+  border-color: #52525B;
+  color: #FFFFFF;
+}
+
+.chat-bubble {
+  padding: 1rem;
+  border: 1px solid var(--border);
+}
+
+.msg-wrap.ai .chat-bubble {
+  background-color: var(--panel);
+}
+
+.msg-wrap.user .chat-bubble {
+  background-color: var(--panel-light);
+  border-color: #52525B;
+}
+
+.chat-time {
+  display: block;
+  font-size: 9px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-align: right;
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+}
+
+.chat-typing-loader {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* 16. Gráficos Chart.js Wrappers */
+.chart-wrapper {
+  position: relative;
+  height: 256px;
+  width: 100%;
+}
+
+.pie-wrapper {
+  position: relative;
+  height: 192px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bar-chart-wrapper {
+  position: relative;
+  height: 224px;
+  width: 100%;
+}
+
+.legend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  font-size: 10px;
+  font-family: var(--font-mono);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.legend-color {
+  height: 8px;
+  width: 8px;
+  flex-shrink: 0;
+}
+
+/* 17. Modais UI */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-card {
+  background-color: var(--panel);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  width: 100%;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: modal-zoom 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.btn-close:hover {
+  color: #FFFFFF;
+}
+
+/* 18. Animações */
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: .7; transform: scale(1.05); }
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+  color: var(--green);
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-fade {
+  animation: fade-in 0.3s ease-out;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes modal-zoom {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--green);
+}
